@@ -13,7 +13,7 @@ private class InMemoryFeedStore: FeedStore {
 	}
 
 	func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-		cachedFeed.append(contentsOf: feed)
+		cachedFeed = feed
 		lastUpdate = timestamp
 		completion(nil)
 	}
@@ -78,9 +78,9 @@ class FeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
 	}
 	
 	func test_insert_overridesPreviouslyInsertedCacheValues() throws {
-//		let sut = try makeSUT()
-//
-//		assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
+		let sut = try makeSUT()
+
+		assertThatInsertOverridesPreviouslyInsertedCacheValues(on: sut)
 	}
 	
 	func test_delete_deliversNoErrorOnEmptyCache() throws {
