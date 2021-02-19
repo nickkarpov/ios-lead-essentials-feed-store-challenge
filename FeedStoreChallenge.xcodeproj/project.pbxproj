@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01FFDA1825E0724800C3D5A3 /* InMemoryFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01FFDA1725E0724800C3D5A3 /* InMemoryFeedStore.swift */; };
 		084BB13C24FE50A10091C705 /* FeedStoreIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084BB13B24FE50A10091C705 /* FeedStoreIntegrationTests.swift */; };
 		084BB13E24FE56830091C705 /* XCTestCase+FeedStoreHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 084BB13D24FE56830091C705 /* XCTestCase+FeedStoreHelpers.swift */; };
 		08CE2B952285BBD100183A1B /* FeedStoreChallenge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08CE2B8B2285BBD100183A1B /* FeedStoreChallenge.framework */; };
@@ -31,6 +32,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		01FFDA1725E0724800C3D5A3 /* InMemoryFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InMemoryFeedStore.swift; sourceTree = "<group>"; };
 		084BB13B24FE50A10091C705 /* FeedStoreIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreIntegrationTests.swift; sourceTree = "<group>"; };
 		084BB13D24FE56830091C705 /* XCTestCase+FeedStoreHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+FeedStoreHelpers.swift"; sourceTree = "<group>"; };
 		08CE2B8B2285BBD100183A1B /* FeedStoreChallenge.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FeedStoreChallenge.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,6 +92,7 @@
 			children = (
 				08CE2BA72285BCC600183A1B /* LocalFeedImage.swift */,
 				08CE2BA52285BCB600183A1B /* FeedStore.swift */,
+				01FFDA1725E0724800C3D5A3 /* InMemoryFeedStore.swift */,
 				08CE2B8F2285BBD100183A1B /* Info.plist */,
 			);
 			path = FeedStoreChallenge;
@@ -231,6 +234,7 @@
 			files = (
 				08CE2BA62285BCB600183A1B /* FeedStore.swift in Sources */,
 				08CE2BA82285BCC600183A1B /* LocalFeedImage.swift in Sources */,
+				01FFDA1825E0724800C3D5A3 /* InMemoryFeedStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
