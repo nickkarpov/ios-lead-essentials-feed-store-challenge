@@ -21,8 +21,8 @@ public class InMemoryFeedStore {
 
 extension InMemoryFeedStore: FeedStore {
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-		operationsQueue.async(flags: .barrier) {
-			self.cachedFeed.removeAll()
+		operationsQueue.async(flags: .barrier) { [weak self] in
+			self?.cachedFeed.removeAll()
 			completion(nil)
 		}
 	}
