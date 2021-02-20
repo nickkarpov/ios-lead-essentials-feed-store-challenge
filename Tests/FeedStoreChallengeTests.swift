@@ -94,7 +94,10 @@ class FeedStoreChallengeTests: XCTestCase, FeedStoreSpecs {
 	// - MARK: Helpers
 	
 	private func makeSUT() throws -> FeedStore {
-		return InMemoryFeedStore()
+		let sut = InMemoryFeedStore()
+		addTeardownBlock { [weak sut] in
+			XCTAssertNil(sut, "Instance should have been deallocated")
+		}
+		return sut
 	}
-	
 }
