@@ -12,27 +12,34 @@ public class InMemoryFeedStore {
 	private var cachedFeed = [LocalFeedImage]()
 	private var lastUpdate = Date()
 
-	public init() {
-	}
+	private let operationsQueue = DispatchQueue(label: "\(type(of: InMemoryFeedStore.self))Queue", qos: .background)
+
+	public init() {}
 }
 
 extension InMemoryFeedStore: FeedStore {
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
-		cachedFeed.removeAll()
-		completion(nil)
+		operationsQueue.async {
+			self.cachedFeed.removeAll()
+			completion(nil)
+		}
 	}
 
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
-		cachedFeed = feed
-		lastUpdate = timestamp
-		completion(nil)
+		operationsQueue.async { [weak self] in
+			self?.cachedFeed = feed
+			self?.lastUpdate = timestamp
+			completion(nil)
+		}
 	}
 
 	public func retrieve(completion: @escaping RetrievalCompletion) {
-		if cachedFeed.isEmpty {
-			completion(.empty)
-		} else {
-			completion(.found(feed: cachedFeed, timestamp: lastUpdate))
+		operationsQueue.async { [cachedFeed, lastUpdate] in
+			if cachedFeed.isEmpty {
+				completion(.empty)
+			} else {
+				completion(.found(feed: cachedFeed, timestamp: lastUpdate))
+			}
 		}
 	}
 }
