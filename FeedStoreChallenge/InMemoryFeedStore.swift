@@ -9,9 +9,7 @@
 import Foundation
 
 public class InMemoryFeedStore {
-	private var cachedFeed = [LocalFeedImage]()
-	private var lastUpdate = Date()
-
+	private var cache: (feed: [LocalFeedImage], timestamp: Date)?
 	private let operationsQueue = DispatchQueue(label: "\(type(of: InMemoryFeedStore.self))Queue",
 												qos: .background,
 												attributes: .concurrent)
@@ -22,26 +20,25 @@ public class InMemoryFeedStore {
 extension InMemoryFeedStore: FeedStore {
 	public func deleteCachedFeed(completion: @escaping DeletionCompletion) {
 		operationsQueue.async(flags: .barrier) { [weak self] in
-			self?.cachedFeed.removeAll()
+			self?.cache = nil
 			completion(nil)
 		}
 	}
 
 	public func insert(_ feed: [LocalFeedImage], timestamp: Date, completion: @escaping InsertionCompletion) {
 		operationsQueue.async(flags: .barrier) { [weak self] in
-			self?.cachedFeed = feed
-			self?.lastUpdate = timestamp
+			self?.cache = (feed: feed, timestamp: timestamp)
 			completion(nil)
 		}
 	}
 
 	public func retrieve(completion: @escaping RetrievalCompletion) {
-		operationsQueue.async { [cachedFeed, lastUpdate] in
-			if cachedFeed.isEmpty {
+		operationsQueue.async { [cache] in
+			guard let cachedFeed = cache else {
 				completion(.empty)
-			} else {
-				completion(.found(feed: cachedFeed, timestamp: lastUpdate))
+				return
 			}
+			completion(.found(feed: cachedFeed.feed, timestamp: cachedFeed.timestamp))
 		}
 	}
 }
